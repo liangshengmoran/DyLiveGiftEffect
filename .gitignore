@@ -1,0 +1,5 @@
+.idea/*
+*.log
+.venv/*
+downloaded_files/*
+data_folder/*
