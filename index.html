@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音主播间特效数据</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 50%;
+      background-color: #f8f9fa;
+    }
+
+    th,
+    td {
+      border: 1px solid #dee2e6;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    td a{
+      text-decoration: none;
+    }
+    td a:hover{
+      text-decoration: underline;
+      color: red;
+    }
+
+    #searchInput {
+      padding: 10px;
+      width: 300px;
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>抖音主播间特效数据</h2>
+  <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="搜索...">
+  <table border="1" id="dataTable">
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>主链接</th>
+      <th>备用 1</th>
+      <th>备用 2</th>
+      <th>备用 3</th>
+    </tr>
+
+    <script>
+      let dataRows = [];
+
+      fetch('./data_folder/output.json')
+     .then(response => response.json())
+     .then(data => {
+        data.forEach((item, index) => {
+          const row = document.createElement('tr');
+
+          // 序号
+          const serialNumberCell = document.createElement('td');
+          serialNumberCell.textContent = index + 1;
+
+          // 名称
+          const nameCell = document.createElement('td');
+          nameCell.textContent = item.name;
+
+          // 主链接
+          const mainLinkCell = document.createElement('td');
+          const mainLink = document.createElement('a');
+          mainLink.href = item.resource_uri;
+          mainLink.textContent = '主链接';
+          mainLinkCell.appendChild(mainLink);
+
+          // 备用链接 1
+          const backupLink1Cell = document.createElement('td');
+          const backupLink1 = document.createElement('a');
+          backupLink1.href = item.url_list[0];
+          backupLink1.textContent = '备用 1';
+          backupLink1Cell.appendChild(backupLink1);
+
+          // 备用链接 2
+          const backupLink2Cell = document.createElement('td');
+          const backupLink2 = document.createElement('a');
+          backupLink2.href = item.url_list[1];
+          backupLink2.textContent = '备用 2';
+          backupLink2Cell.appendChild(backupLink2);
+
+          // 备用链接 3
+          const backupLink3Cell = document.createElement('td');
+          const backupLink3 = document.createElement('a');
+          backupLink3.href = item.url_list[2];
+          backupLink3.textContent = '备用 3';
+          backupLink3Cell.appendChild(backupLink3);
+
+          row.appendChild(serialNumberCell);
+          row.appendChild(nameCell);
+          row.appendChild(mainLinkCell);
+          row.appendChild(backupLink1Cell);
+          row.appendChild(backupLink2Cell);
+          row.appendChild(backupLink3Cell);
+
+          dataRows.push(row);
+        });
+
+        dataRows.forEach(row => document.getElementById('dataTable').appendChild(row));
+      })
+     .catch(error => console.error('获取数据时出错:', error));
+
+      function searchFunction() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toUpperCase();
+        const table = document.getElementById('dataTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+          const nameCell = rows[i].getElementsByTagName('td')[1];
+          if (nameCell) {
+            const nameValue = nameCell.textContent || nameCell.innerText;
+            if (nameValue.toUpperCase().indexOf(filter) > -1) {
+              rows[i].style.display = '';
+            } else {
+              rows[i].style.display = 'none';
+            }
+          }
+        }
+      }
+    </script>
+  </table>
+</body>
+
+</html>
