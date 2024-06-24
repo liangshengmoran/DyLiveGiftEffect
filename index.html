@@ -56,9 +56,7 @@
       <th>序号</th>
       <th>名称</th>
       <th>主链接</th>
-      <th>备用 1</th>
-      <th>备用 2</th>
-      <th>备用 3</th>
+      <th colspan="3">备用</th>
     </tr>
 
     <script>
@@ -85,21 +83,19 @@
           mainLink.textContent = '主链接';
           mainLinkCell.appendChild(mainLink);
 
-          // 备用链接 1
+          // 备用链接
           const backupLink1Cell = document.createElement('td');
           const backupLink1 = document.createElement('a');
           backupLink1.href = item.url_list[0];
           backupLink1.textContent = '备用 1';
           backupLink1Cell.appendChild(backupLink1);
 
-          // 备用链接 2
           const backupLink2Cell = document.createElement('td');
           const backupLink2 = document.createElement('a');
           backupLink2.href = item.url_list[1];
           backupLink2.textContent = '备用 2';
           backupLink2Cell.appendChild(backupLink2);
 
-          // 备用链接 3
           const backupLink3Cell = document.createElement('td');
           const backupLink3 = document.createElement('a');
           backupLink3.href = item.url_list[2];

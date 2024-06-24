@@ -3,3 +3,4 @@
 .venv/*
 downloaded_files/*
 data_folder/*
+test.json
